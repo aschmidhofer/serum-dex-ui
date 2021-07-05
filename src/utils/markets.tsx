@@ -27,9 +27,21 @@ import BonfidaApi from './bonfidaConnector';
 // Used in debugging, should be false in production
 const _IGNORE_DEPRECATED = false;
 
+export const SPW_MARKET: MarketInfo = {
+  address: new PublicKey("7t6mFVJgHJM3o11ev8RYu8aFVB1oZF9TFJbyD1suwoS6"),
+  name: "SPW/USDT",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+  deprecated: false,
+  quoteLabel: "USDT",
+  baseLabel: "SPW"
+}
+MARKETS.push(SPW_MARKET); // add custom market
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
   ? MARKETS.map((m) => ({ ...m, deprecated: false }))
   : MARKETS;
+
+
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
@@ -159,7 +171,7 @@ const _SLOW_REFRESH_INTERVAL = 5 * 1000;
 const _FAST_REFRESH_INTERVAL = 1000;
 
 export const DEFAULT_MARKET = USE_MARKETS.find(
-  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated,
+  ({ name, deprecated }) => name === 'SPW/USDT' && !deprecated,
 );
 
 export function getMarketDetails(
